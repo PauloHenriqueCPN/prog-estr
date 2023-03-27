@@ -1,60 +1,15 @@
-u = int(input("Escolha o algarismo para ficar na casa das unidades:"))
-d = int(input("Escolha o algarismo para ficar na casa das dezenas:"))
+n = int(input("Digite o número a ser transformado:"))
 
+mr = ["", "M", "MM", "MMM",]
+cr = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
+dr = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
+ur = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
 
-if u == 1:
-    nu = "|"
-    print("unidade igual 1")
+m = mr[n // 1000]
+c = cr[(n % 1000) // 100]
+d = dr[(n % 100) // 10]
+u = ur[(n % 10)]
 
-elif u == 2:
-    nu = "||"
+r = m + c + d + u
 
-elif u == 3:
-    nu = "|||"
-
-elif u == 4:
-    nu = "|V"
-
-elif u == 5:
-    nu = "V"
-
-elif u == 6:
-    nu = "V|"
-
-elif u == 7:
-    nu = "V||"
-
-elif u == 8:
-    nu = "V|||"
-
-elif u == 9:
-    nu = "|X"
-
-if d == 1:
-    nd = "X"
-
-elif d == 2:
-    nd = "XX"
-
-elif d == 3:
-    nd = "XXX"
-
-elif d == 4:
-    nd = "XL"
-
-elif d == 5:
-    nd = "L"
-
-elif d == 6:
-    nd = "LX"
-
-elif d == 7:
-    nd = "LXX"
-
-elif d == 8:
-    nd = "LXXX"
-
-elif d == 9:
-    nd = "XC"
-
-print("O seu número romano ficou assim:",nd,nu)
+print("O seu número em romano é ", r)
