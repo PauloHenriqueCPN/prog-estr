@@ -1,0 +1,14 @@
+print("Coloque o nome do primeiro jogador:")
+n1 = input()
+
+sl1 = int(input("Escolha a linha do primeiro submarino(1 à 5):"))
+sc1 = int(input("Escolha a coluna do primeiro submarino(1 à 5):"))
+
+sl2 = int(input("Escolha a linha do segundo submarino(1 à 5):"))
+sc2 = int(input("Escolha a coluna do segundo submarino(1 à 5):"))
+
+sl3 = int(input("Escolha a linha do terceiro submarino(1 à 5):"))
+sc3 = int(input("Escolha a coluna do terceiro submarino(1 à 5):"))
+
+if sl1 > 5 or sc1 > 5 or sl1 > 5 or sc2 > 5 or sl3 > 5 or sc3 > 5:
+    print("Número inválido")
