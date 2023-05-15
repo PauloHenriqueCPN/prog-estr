@@ -1,0 +1,33 @@
+a = 1
+n = []
+ma = []
+while a <= 10:
+    print(f'Informe as notas do aluno {a}')
+    a1 = float(input('Digite a nota da A1:'))
+    a2 = float(input('Digite a nota da A2:'))
+    m = (a1 + a2) / 2
+    a = a + 1
+    n.append(a1)
+    n.append(a2)
+    ma.append(m)
+
+a = 1
+mt = sum(n) / 20
+
+while a <= 10:
+    m = ma[a - 1]
+    print(f'A média do aluno {a} é',m)
+    a = a + 1
+    if m >= 6:
+        if m > mt:
+            print('O aluno foi aprovado e ficou acima da média da turma')
+
+        else:
+            print('O aluno foi aprovado porém ficou abaixo da média da turma')
+
+    else:
+        print('O aluno foi reprovado')
+
+    print('-----------------------------------------------------')
+
+print('Média da turma foi de:', mt)
