@@ -1,0 +1,101 @@
+tabuleiro1 = []
+tabuleiro2 = []
+tabuleiro_vazio1 = []
+tabuleiro_vazio2 = []
+
+for tabuleiro_cod in range(5):
+    tabuleiro1.append(["o"] * 5)
+    tabuleiro2.append(["o"] * 5)
+    tabuleiro_vazio1.append(["o"] * 5)
+    tabuleiro_vazio2.append(["o"] * 5)
+
+def mostra_tabuleiro(tabuleiro):
+    for linha in tabuleiro:
+        print(" ".join(linha))
+
+def submarino_posicionar(tabuleiro):
+    submarino_numero = 1
+    while submarino_numero < 4:
+        print(f"Defina a posição do submarino número {submarino_numero}")
+        linha = int(input(f"Informe a linha do submarino {submarino_numero}:")) - 1
+        coluna = int(input(f"Informe a coluna do submarino {submarino_numero}:")) - 1
+
+        if linha < 0 or linha > 5 or coluna < 0 or coluna > 5:
+            print("Posição inválida. Tente novamente")
+
+        elif tabuleiro[linha][coluna] != "S":
+            tabuleiro[linha][coluna] = "S"
+            submarino_numero += 1
+
+        else:
+            print("Já existe um submarino nessa posição. Tente novamente")
+
+def tentativa_acerto():
+    print("Tente acertar o submarino inimigo")
+    linha = int(input("Escolha uma linha:"))
+    coluna = int(input("Escolha uma coluna:"))
+    return(linha, coluna)
+
+def verificar_palpite(palpite, tabuleiro):
+    linha, coluna = palpite
+    if tabuleiro[linha][coluna] == "S":
+        print("Aniquilação! Você acertou um submarino!")
+        tabuleiro[linha][coluna] = "X"
+        return True
+
+    else:
+        print("Ainda temos inimigos. Você errou os submarinos.")
+        tabuleiro[linha][coluna] = "E"
+        return False
+
+j1 = input("Coloque o nome do primeiro jogador:")
+print("""
+         o o o o o
+         o o o o o
+         o o o o o
+         o o o o o
+         o o o o o
+         """)
+submarino_posicionar(tabuleiro1)
+
+print("--------------------------------------")
+
+j2 = input("Coloque o nome do segundo jogador:")
+print("""
+         o o o o o
+         o o o o o
+         o o o o o
+         o o o o o
+         o o o o o
+         """)
+submarino_posicionar(tabuleiro2)
+
+
+
+jogando = 1
+acertos1 = 0
+acertos2 = 0
+
+while acertos1 < 3 or acertos2 < 3:
+    if jogando == 1:
+        print("Vez de", j1)
+        mostra_tabuleiro(tabuleiro_vazio1)
+        palpite = tentativa_acerto()
+        if verificar_palpite(palpite, tabuleiro2):
+            acertos1 += 1
+            if acertos1 == 3:
+                print(j1, "venceu a batalha! Mas a guerra nunca termina!")
+                break
+            jogando = 2
+
+    else:
+        print("Vez de", j2)
+        mostra_tabuleiro(tabuleiro_vazio2)
+        palpite = tentativa_acerto()
+        if verificar_palpite(palpite, tabuleiro1):
+            acertos2 += 1
+            if acertos2 == 3:
+                print(j2, "venceu a batalha! Mas a guerra nunca termina!")
+                break
+            jogando = 1
+
