@@ -1,0 +1,35 @@
+import random
+
+def manipulate_vector(vector):
+    """Manipula os valores de um vetor somando-os com as células anteriores."""
+    manipulated_vector = []
+    cumulative_sum = 0
+
+    for num in vector:
+        cumulative_sum += num
+        manipulated_vector.append(cumulative_sum)
+
+    return manipulated_vector
+
+def print_vector(vector):
+    """Imprime os elementos de um vetor."""
+    for num in vector:
+        print(num, end=" ")
+    print()
+
+# Função principal
+def main():
+    # Preenchimento do vetor com números aleatórios
+    vector = [random.randint(0, 20) for _ in range(10)]
+
+    print("Vetor original:")
+    print_vector(vector)
+
+    # Manipulação do vetor
+    manipulated_vector = manipulate_vector(vector)
+
+    print("Vetor manipulado:")
+    print_vector(manipulated_vector)
+
+if __name__ == "__main__":
+    main()
