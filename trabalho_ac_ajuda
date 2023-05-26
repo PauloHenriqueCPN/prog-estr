@@ -1,0 +1,93 @@
+# Cria o tabuleiro vazio
+tabuleiro1 = []
+tabuleiro2 = []
+for _ in range(5):
+    tabuleiro1.append(["O"] * 5)
+    tabuleiro2.append(["O"] * 5)
+
+# Função para exibir o tabuleiro
+def exibir_tabuleiro(tabuleiro):
+    for linha in tabuleiro:
+        print(" ".join(linha))
+
+# Função para posicionar os navios de acordo com a escolha do jogador
+def posicionar_navios(tabuleiro):
+    navios_posicionados = 0
+    while navios_posicionados < 5:
+        print("Posicione o navio", navios_posicionados + 1)
+        linha = int(input("Digite o número da linha (0-4): "))
+        coluna = int(input("Digite o número da coluna (0-4): "))
+        if linha < 0 or linha > 4 or coluna < 0 or coluna > 4:
+            print("Posição inválida. Tente novamente.")
+        elif tabuleiro[linha][coluna] != "N":
+            tabuleiro[linha][coluna] = "N"
+            navios_posicionados += 1
+        else:
+            print("Já existe um navio nessa posição. Tente novamente.")
+
+# Função para obter o palpite do jogador
+def obter_palpite():
+    linha = int(input("Digite o número da linha: "))
+    coluna = int(input("Digite o número da coluna: "))
+    return (linha, coluna)
+
+# Função para verificar se o palpite acertou um navio
+def verificar_palpite(palpite, tabuleiro):
+    linha, coluna = palpite
+    if tabuleiro[linha][coluna] == "N":
+        print("Parabéns! Você acertou um navio!")
+        tabuleiro[linha][coluna] = "X"
+        return True
+    else:
+        print("Oops! Você errou!")
+        tabuleiro[linha][coluna] = "T"
+        return False
+
+# Número de jogadas permitidas
+num_jogadas = 10
+
+# Posiciona os navios no tabuleiro para cada jogador
+print("Jogador 1, posicione seus navios:")
+posicionar_navios(tabuleiro1)
+print("Jogador 2, posicione seus navios:")
+posicionar_navios(tabuleiro2)
+
+print("Bem-vindo ao Jogo de Batalha Naval!")
+
+jogador_atual = 1
+jogadas = 0
+navios_afundados_jogador1 = 0
+navios_afundados_jogador2 = 0
+
+# Loop principal do jogo
+while jogadas < num_jogadas:
+    print("Jogada", jogadas + 1)
+    if jogador_atual == 1:
+        print("Jogador 1:")
+        exibir_tabuleiro(tabuleiro2)
+        palpite = obter_palpite()
+        if verificar_palpite(palpite, tabuleiro2):
+            navios_afundados_jogador1 += 1
+            if navios_afundados_jogador1 == 5:
+                print("Parabéns! Jogador 1 afundou todos os navios do Jogador 2!")
+                break
+        jogador_atual = 2
+    else:
+        print("Jogador 2:")
+        exibir_tabuleiro(tabuleiro1)
+        palpite = obter_palpite()
+        if verificar_palpite(palpite, tabuleiro1):
+            navios_afundados_jogador2 += 1
+            if navios_afundados_jogador2 == 5:
+                print("Parabéns! Jogador 2 afundou todos os navios do Jogador 1!")
+                break
+        jogador_atual = 1
+    jogadas += 1
+
+if jogadas == num_jogadas:
+    print("Fim de jogo! Número máximo de jogadas alcançado.")
+
+print("Tabuleiro do Jogador 1:")
+exibir_tabuleiro(tabuleiro1)
+print("Tabuleiro do Jogador 2:")
+exibir_tabuleiro(tabuleiro2)
