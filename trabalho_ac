@@ -30,22 +30,22 @@ def submarino_posicionar(tabuleiro):
         else:
             print("Já existe um submarino nessa posição. Tente novamente")
 
-def tentativa_acerto():
+def tentativa_acerto(tabuleiro):
     print("Tente acertar o submarino inimigo")
-    linha = int(input("Escolha uma linha:"))
-    coluna = int(input("Escolha uma coluna:"))
+    linha = int(input("Escolha uma linha:")) - 1
+    coluna = int(input("Escolha uma coluna:")) - 1
     return(linha, coluna)
 
-def verificar_palpite(palpite, tabuleiro):
+def verificar_palpite(palpite, tabuleiro, tabuleiro_vazio):
     linha, coluna = palpite
     if tabuleiro[linha][coluna] == "S":
         print("Aniquilação! Você acertou um submarino!")
-        tabuleiro[linha][coluna] = "X"
+        tabuleiro_vazio[linha][coluna] = "S"
         return True
 
     else:
         print("Ainda temos inimigos. Você errou os submarinos.")
-        tabuleiro[linha][coluna] = "E"
+        tabuleiro_vazio[linha][coluna] = "X"
         return False
 
 j1 = input("Coloque o nome do primeiro jogador:")
@@ -70,32 +70,39 @@ print("""
          """)
 submarino_posicionar(tabuleiro2)
 
-
-
 jogando = 1
 acertos1 = 0
 acertos2 = 0
+tiros1 = 0
+tiros2 = 0
 
-while acertos1 < 3 or acertos2 < 3:
+while acertos1 < 3 and acertos2 < 3:
     if jogando == 1:
-        print("Vez de", j1)
+        print(j1,",Pressione ENTER para que possa jogar")
+        input()
+        print("Jogador 1:", j1)
+        print("Tiros dados:", tiros1,  "Acertos:", acertos1)
         mostra_tabuleiro(tabuleiro_vazio1)
-        palpite = tentativa_acerto()
-        if verificar_palpite(palpite, tabuleiro2):
+        palpite = tentativa_acerto(tabuleiro2)
+        if verificar_palpite(palpite, tabuleiro2, tabuleiro_vazio1):
             acertos1 += 1
             if acertos1 == 3:
                 print(j1, "venceu a batalha! Mas a guerra nunca termina!")
                 break
-            jogando = 2
+        tiros1 += 1
+        jogando = 2
 
     else:
-        print("Vez de", j2)
+        print(j2,",Pressione ENTER para que possa jogar")
+        input()
+        print("Jogador 2:", j2)
+        print("Tiros dados:", tiros2, "Acertos:", acertos2)
         mostra_tabuleiro(tabuleiro_vazio2)
-        palpite = tentativa_acerto()
-        if verificar_palpite(palpite, tabuleiro1):
+        palpite = tentativa_acerto(tabuleiro1)
+        if verificar_palpite(palpite, tabuleiro1, tabuleiro_vazio2):
             acertos2 += 1
             if acertos2 == 3:
                 print(j2, "venceu a batalha! Mas a guerra nunca termina!")
                 break
-            jogando = 1
-
+        tiros2 += 1
+        jogando = 1
