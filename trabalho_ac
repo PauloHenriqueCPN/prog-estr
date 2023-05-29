@@ -1,3 +1,4 @@
+import os
 
 while True:
     tabuleiro1 = []
@@ -22,7 +23,7 @@ while True:
             linha = int(input(f"Informe a linha do submarino {submarino_numero}:")) - 1
             coluna = int(input(f"Informe a coluna do submarino {submarino_numero}:")) - 1
 
-            if linha < 0 or linha > 5 or coluna < 0 or coluna > 5:
+            if linha < 0 or linha > len(tabuleiro) or coluna < 0 or coluna > len(tabuleiro):
                 print("Posição inválida. Tente novamente")
 
             elif tabuleiro[linha][coluna] != "Sub":
@@ -33,13 +34,20 @@ while True:
                 print("Já existe um submarino nessa posição. Tente novamente")
 
     def tentativa_acerto(tabuleiro):
-        print("Tente acertar o submarino inimigo")
-        linha = int(input("Escolha uma linha:")) - 1
-        coluna = int(input("Escolha uma coluna:")) - 1
-        return(linha, coluna)
+        while True:
+            print("Tente acertar o submarino inimigo")
+            linha = int(input("Escolha uma linha:")) - 1
+            coluna = int(input("Escolha uma coluna:")) - 1
+
+            if linha < 0 or linha > len(tabuleiro) or coluna < 0 or coluna > len(tabuleiro):
+                print("Esta posição não existe no mapa. Atire novamente.")
+
+            else:
+                return(linha, coluna)
 
     def verificar_palpite(palpite, tabuleiro, tabuleiro_vazio):
         linha, coluna = palpite
+        
         if tabuleiro[linha][coluna] == "Sub":
             print("Aniquilação! Você acertou um submarino!")
             tabuleiro_vazio[linha][coluna] = "S"
@@ -54,6 +62,13 @@ while True:
             tabuleiro_vazio[linha][coluna] = "X"
             return False
 
+    def limpar_jogo():
+        if os.name == "nt":
+            os.system("cls")
+
+        else:
+            os.system("clear")
+
     j1 = input("Coloque o nome do primeiro jogador:")
     print("""
              o o o o o
@@ -63,6 +78,8 @@ while True:
              o o o o o
              """)
     submarino_posicionar(tabuleiro1)
+    input("Aperter ENTER para que o segundo jogador possa jogar")
+    limpar_jogo()
 
     print("--------------------------------------")
 
@@ -75,6 +92,8 @@ while True:
              o o o o o
              """)
     submarino_posicionar(tabuleiro2)
+    input("Começar jogo")
+    limpar_jogo()
 
     jogando = 1
     acertos1 = 0
@@ -86,10 +105,13 @@ while True:
         if jogando == 1:
             print(j1,",Pressione ENTER para que possa jogar")
             input()
+            limpar_jogo()
+            
             print("Jogador 1:", j1)
             print("Tiros dados:", tiros1,  "Acertos:", acertos1)
             mostra_tabuleiro(tabuleiro_vazio1)
             palpite = tentativa_acerto(tabuleiro2)
+            
             while tabuleiro_vazio1[palpite[0]][palpite[1]] in ["S", "X"]:
                 print("Você já atirou nessa posição. Escolha um novo local.")
                 palpite = tentativa_acerto(tabuleiro2)
@@ -98,16 +120,20 @@ while True:
                 if acertos1 == 3:
                     print(j1, "venceu a batalha! Mas a guerra nunca termina!")
                     break
+            
             tiros1 += 1
             jogando = 2
 
         else:
             print(j2,",Pressione ENTER para que possa jogar")
             input()
+            limpar_jogo()
+            
             print("Jogador 2:", j2)
             print("Tiros dados:", tiros2, "Acertos:", acertos2)
             mostra_tabuleiro(tabuleiro_vazio2)
             palpite = tentativa_acerto(tabuleiro1)
+            
             while tabuleiro_vazio2[palpite[0]][palpite[1]] in ["S", "X"]:
                 print("Você já atirou nessa posição. Escolha um novo local.")
                 palpite = tentativa_acerto(tabuleiro1)
@@ -116,10 +142,12 @@ while True:
                 if acertos2 == 3:
                     print(j2, "venceu a batalha! Mas a guerra nunca termina!")
                     break
+            
             tiros2 += 1
             jogando = 1
 
     reiniciar_jogo = input("Lutar novamente? (s/n)")
+    limpar_jogo()
 
     if reiniciar_jogo.lower() != "s":
         break
