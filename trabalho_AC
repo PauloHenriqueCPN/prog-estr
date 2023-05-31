@@ -12,6 +12,21 @@ while True:
         tabuleiro_vazio1.append(["o"] * 5)
         tabuleiro_vazio2.append(["o"] * 5)
 
+    numeros = list(range(1, 6))
+    numeros = [str(num) for num in numeros]
+
+    for coluna in range(len(numeros)):
+        tabuleiro1[coluna].insert(0, numeros[coluna])
+
+    for coluna in range(len(numeros)):
+        tabuleiro2[coluna].insert(0, numeros[coluna])
+
+    for coluna in range(len(numeros)):
+        tabuleiro_vazio1[coluna].insert(0, numeros[coluna])
+
+    for coluna in range(len(numeros)):
+        tabuleiro_vazio2[coluna].insert(0, numeros[coluna])
+
     def mostra_tabuleiro(tabuleiro):
         for linha in tabuleiro:
             print(" ".join(linha))
@@ -21,7 +36,7 @@ while True:
         while submarino_numero < 4:
             print(f"Defina a posição do submarino número {submarino_numero}")
             linha = int(input(f"Informe a linha do submarino {submarino_numero}:")) - 1
-            coluna = int(input(f"Informe a coluna do submarino {submarino_numero}:")) - 1
+            coluna = int(input(f"Informe a coluna do submarino {submarino_numero}:"))
 
             if linha < 0 or linha > len(tabuleiro) or coluna < 0 or coluna > len(tabuleiro):
                 print("Posição inválida. Tente novamente")
@@ -37,7 +52,7 @@ while True:
         while True:
             print("Tente acertar o submarino inimigo")
             linha = int(input("Escolha uma linha:")) - 1
-            coluna = int(input("Escolha uma coluna:")) - 1
+            coluna = int(input("Escolha uma coluna:"))
 
             if linha < 0 or linha > len(tabuleiro) or coluna < 0 or coluna > len(tabuleiro):
                 print("Esta posição não existe no mapa. Atire novamente.")
@@ -47,7 +62,7 @@ while True:
 
     def verificar_palpite(palpite, tabuleiro, tabuleiro_vazio):
         linha, coluna = palpite
-        
+
         if tabuleiro[linha][coluna] == "Sub":
             print("Aniquilação! Você acertou um submarino!")
             tabuleiro_vazio[linha][coluna] = "S"
@@ -71,11 +86,12 @@ while True:
 
     j1 = input("Coloque o nome do primeiro jogador:")
     print("""
-             o o o o o
-             o o o o o
-             o o o o o
-             o o o o o
-             o o o o o
+             1 2 3 4 5
+           1 o o o o o
+           2 o o o o o
+           3 o o o o o
+           4 o o o o o
+           5 o o o o o
              """)
     submarino_posicionar(tabuleiro1)
     input("Aperter ENTER para que o segundo jogador possa jogar")
@@ -85,11 +101,12 @@ while True:
 
     j2 = input("Coloque o nome do segundo jogador:")
     print("""
-             o o o o o
-             o o o o o
-             o o o o o
-             o o o o o
-             o o o o o
+             1 2 3 4 5
+           1 o o o o o
+           2 o o o o o
+           3 o o o o o
+           4 o o o o o
+           5 o o o o o
              """)
     submarino_posicionar(tabuleiro2)
     input("Começar jogo")
@@ -106,12 +123,13 @@ while True:
             print(j1,",Pressione ENTER para que possa jogar")
             input()
             limpar_jogo()
-            
+
             print("Jogador 1:", j1)
             print("Tiros dados:", tiros1,  "Acertos:", acertos1)
+            print("  1 2 3 4 5")
             mostra_tabuleiro(tabuleiro_vazio1)
             palpite = tentativa_acerto(tabuleiro2)
-            
+
             while tabuleiro_vazio1[palpite[0]][palpite[1]] in ["S", "X"]:
                 print("Você já atirou nessa posição. Escolha um novo local.")
                 palpite = tentativa_acerto(tabuleiro2)
@@ -120,7 +138,7 @@ while True:
                 if acertos1 == 3:
                     print(j1, "venceu a batalha! Mas a guerra nunca termina!")
                     break
-            
+
             tiros1 += 1
             jogando = 2
 
@@ -128,12 +146,13 @@ while True:
             print(j2,",Pressione ENTER para que possa jogar")
             input()
             limpar_jogo()
-            
+
             print("Jogador 2:", j2)
             print("Tiros dados:", tiros2, "Acertos:", acertos2)
+            print("  1 2 3 4 5")
             mostra_tabuleiro(tabuleiro_vazio2)
             palpite = tentativa_acerto(tabuleiro1)
-            
+
             while tabuleiro_vazio2[palpite[0]][palpite[1]] in ["S", "X"]:
                 print("Você já atirou nessa posição. Escolha um novo local.")
                 palpite = tentativa_acerto(tabuleiro1)
@@ -142,7 +161,7 @@ while True:
                 if acertos2 == 3:
                     print(j2, "venceu a batalha! Mas a guerra nunca termina!")
                     break
-            
+
             tiros2 += 1
             jogando = 1
 
